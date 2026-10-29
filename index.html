@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Samer J. Farhat, Senior Software Engineer: full-stack web apps with React, Next.js, Node.js, .NET and Laravel.">
+<link rel="icon" href="portfolio-assets/samer-photo.jpg">
+<title>Samer Farhat Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a "routing table". Narrow left column carries the market / dialing code, wide right column the work. */
+:root {
+  --bg: #F2F4F6;
+  --surface: #FFFFFF;
+  --fg: #13202C;
+  --muted: #5B6875;
+  --line: #D8DEE4;
+  --accent: #1F48C9;
+  --accent-soft: #E3E9FB;
+  --signal: #C2610A;
+  --tile: #FFFFFF;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E151C; --surface: #151F29; --fg: #E6ECF1; --muted: #93A1AE;
+    --line: #26323E; --accent: #8EA8FF; --accent-soft: #1C2A4D; --signal: #F0A257;
+    --tile: #F4F5F6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E151C; --surface: #151F29; --fg: #E6ECF1; --muted: #93A1AE;
+  --line: #26323E; --accent: #8EA8FF; --accent-soft: #1C2A4D; --signal: #F0A257;
+  --tile: #F4F5F6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 1rem/1.6 var(--body);
+  padding-inline: 20px; padding-block: 0 64px;
+}
+.wrap { max-width: 1060px; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+a { color: var(--accent); }
+.mono { font-family: var(--mono); }
+.eyebrow { font: 600 .72rem/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* Hero */
+header.hero { padding-block: 72px 48px; display: grid; gap: 28px; }
+.hero-top { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; align-items: center; }
+.hero-text { display: grid; gap: 28px; min-width: 0; }
+.portrait { width: 100%; max-width: 300px; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); box-shadow: 10px 10px 0 var(--accent-soft); }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; line-height: .98; letter-spacing: -.03em; }
+.hero h1 span { color: var(--accent); }
+.hero p.lede { font-size: 1.2rem; max-width: 62ch; color: var(--muted); margin: 0; }
+.hero p.lede strong { color: var(--fg); font-weight: 600; }
+.contact { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: .92rem; }
+.contact span { color: var(--muted); }
+.contact b { color: var(--fg); font-weight: 600; user-select: all; }
+
+.bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 18px; margin-right: 10px; vertical-align: -2px; }
+.bars i { width: 4px; background: var(--signal); border-radius: 1px; animation: pulse 2.4s ease-in-out infinite; }
+.bars i:nth-child(1) { height: 25%; } .bars i:nth-child(2) { height: 50%; animation-delay: .15s; }
+.bars i:nth-child(3) { height: 75%; animation-delay: .3s; } .bars i:nth-child(4) { height: 100%; animation-delay: .45s; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .bars i { animation: none; } }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+.stats div { padding: 18px 16px 18px 0; display: grid; gap: 4px; }
+.stats div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.stats b { font: 700 2rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.stats span { font-size: .85rem; color: var(--muted); }
+
+.markets { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 20px 0; }
+.markets span { font: 500 .8rem/1 var(--mono); padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.markets span b { color: var(--signal); font-weight: 600; margin-right: 6px; }
+
+/* Sections */
+section { padding-block: 56px 0; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 2px solid var(--fg); }
+.sec-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 700; letter-spacing: -.02em; }
+.sec-head p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+/* Experience timeline */
+.job { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; padding-block: 22px; border-bottom: 1px solid var(--line); }
+.job .when { font: 600 .82rem/1.4 var(--mono); color: var(--signal); font-variant-numeric: tabular-nums; }
+.job .when small { display: block; color: var(--muted); font-weight: 400; }
+.job h3 { font-size: 1.25rem; font-weight: 700; }
+.job .org { color: var(--muted); margin: 2px 0 8px; font-size: .92rem; }
+.job p { margin: 0; max-width: 70ch; }
+.job.current h3::after { content: "Now"; font: 600 .66rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--bg); background: var(--signal); padding: 4px 6px; border-radius: 3px; margin-left: 10px; vertical-align: 4px; }
+
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button {
+  font: 500 .8rem/1 var(--body); color: var(--fg); background: transparent;
+  border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer;
+}
+.filters button:hover { border-color: var(--accent); }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.group-label { padding-block: 32px 4px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.group-label em { font-style: normal; color: var(--signal); }
+
+/* Project rows */
+.project { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; padding-block: 24px; border-bottom: 1px solid var(--line); }
+.route { display: grid; gap: 6px; align-content: start; }
+.plogo { width: 120px; height: 70px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #FFFFFF; display: grid; place-items: center; margin-bottom: 6px; }
+.plogo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.plogo.initials { background: var(--accent-soft); color: var(--accent); font: 700 1.5rem/1 var(--display); letter-spacing: -.02em; border-color: transparent; }
+.job .plogo { margin-bottom: 10px; }
+.route .code { font: 600 1.35rem/1 var(--mono); color: var(--signal); font-variant-numeric: tabular-nums; }
+.route .market { font-size: .82rem; color: var(--muted); line-height: 1.35; }
+.project h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -.01em; }
+.project .client { font-size: .9rem; color: var(--muted); margin: 2px 0 10px; }
+.project p { margin: 0 0 12px; max-width: 68ch; }
+.project ul { margin: 0 0 14px; padding-left: 18px; max-width: 68ch; color: var(--muted); }
+.project ul li { margin-bottom: 4px; }
+.project ul li::marker { color: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font: 500 .74rem/1 var(--mono); background: var(--accent-soft); color: var(--accent); padding: 6px 8px; border-radius: 3px; }
+.project.hidden-by-filter { display: none; }
+.empty { padding-block: 24px; color: var(--muted); }
+
+/* Screenshots */
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.shots.one { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+.shots.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.shots.phones { grid-template-columns: repeat(auto-fill, minmax(150px, 190px)); }
+.shots.phones img { aspect-ratio: 430 / 700; }
+figure { margin: 0; display: grid; gap: 6px; }
+figure a { display: block; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+figure img { display: block; width: 100%; height: auto; aspect-ratio: var(--ar, 1200 / 833); object-fit: cover; object-position: top; transition: transform .3s ease; }
+figure a:hover img { transform: scale(1.015); }
+@media (prefers-reduced-motion: reduce) { figure img { transition: none; } }
+figcaption { font-size: .8rem; color: var(--muted); }
+
+/* Logo design */
+.logos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-top: 24px; }
+.logo-tile { background: var(--tile); border: 1px solid var(--line); border-radius: 6px; display: grid; grid-template-rows: 150px auto; }
+.logo-tile .art { display: grid; place-items: center; padding: 22px; }
+.logo-tile img { max-height: 106px; max-width: 82%; width: auto; height: auto; }
+.logo-tile .cap { border-top: 1px solid #E4E7EA; padding: 10px 14px; display: flex; justify-content: space-between; gap: 8px; font-size: .8rem; color: #4A5560; }
+.logo-tile .cap b { color: #13202C; font-weight: 600; }
+.mockups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding-top: 12px; }
+.mockups img { aspect-ratio: 3 / 2; object-fit: cover; object-position: center; }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.skills div { padding: 22px 20px 22px 0; border-bottom: 1px solid var(--line); }
+.skills div:not(:nth-child(3n+1)) { padding-left: 20px; border-left: 1px solid var(--line); }
+.skills h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.skills p { margin: 0; color: var(--muted); font-size: .94rem; }
+
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+.facts div { padding-block: 18px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.facts b { font-weight: 600; }
+.facts span { color: var(--muted); font-size: .92rem; }
+
+footer { padding-block: 56px 0; color: var(--muted); font-size: .88rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 760px) {
+  header.hero { padding-block: 48px 32px; }
+  .hero-top { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .portrait { order: -1; max-width: 160px; box-shadow: 6px 6px 0 var(--accent-soft); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stats div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stats div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .project, .job { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .route { grid-auto-flow: column; justify-content: start; align-items: center; gap: 12px; }
+  .plogo { width: 96px; height: 56px; margin-bottom: 0; }
+  .plogo.initials { font-size: 1.2rem; }
+  .shots, .shots.three, .facts { grid-template-columns: minmax(0, 1fr); }
+  .shots.phones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .logos, .mockups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+  .skills div, .skills div:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-top">
+    <div class="hero-text">
+    <div class="eyebrow"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Senior Software Engineer · 6+ years</div>
+    <h1>Samer J. Farhat.<br><span>Full-stack web apps</span> for telecom, security and the public sector.</h1>
+    <p class="lede">I build web products end to end: <strong>React, Next.js and TypeScript</strong> on the front, <strong>Node.js, .NET Core and Laravel</strong> on the back. Today I work on security products at Odyssey Cybersecurity alongside AI researchers and analysts. Before that I spent almost five years at inmobiles shipping portals, CMSs and CRMs for mobile operators in seven countries. I started out in design, and I still care about how the result looks.</p>
+    <div class="contact">
+      <span>Mansouriye, Lebanon · open to remote and relocation</span>
+      <span>Email <b>samerfarhat777@gmail.com</b></span>
+      <span>Phone <b>+961 3 171 765</b></span>
+      <span><a href="https://linkedin.com/in/samer-j-farhat">linkedin.com/in/samer-j-farhat</a></span>
+    </div>
+    </div>
+    <img class="portrait" src="portfolio-assets/samer-photo.jpg" alt="Portrait of Samer J. Farhat" width="640" height="640">
+    </div>
+    <div>
+      <div class="stats">
+        <div><b>6+</b><span>years building for the web</span></div>
+        <div><b>25+</b><span>production projects</span></div>
+        <div><b>6</b><span>mobile operators</span></div>
+        <div><b>3</b><span>languages: Arabic, English, French</span></div>
+      </div>
+      <div class="markets" aria-label="Markets">
+        <span><b>+357</b>Cyprus · Odyssey</span>
+        <span><b>+964</b>Iraq · Korek</span>
+        <span><b>+966</b>Saudi Arabia · Mobily</span>
+        <span><b>+92</b>Pakistan · Jazz, Zong</span>
+        <span><b>+233</b>Ghana · MTN</span>
+        <span><b>+222</b>Mauritania · Mattel</span>
+        <span><b>+237</b>Cameroon · FODECC</span>
+        <span><b>+33</b>France · AAA</span>
+        <span><b>+961</b>Lebanon</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="sec-head"><h2 id="exp-h">Experience</h2></div>
+    <div class="job current">
+      <div class="when"><div class="plogo"><img src="portfolio-assets/p-odyssey.png" alt="Odyssey Cybersecurity logo" loading="lazy"></div>Jul 2025 – now<small>Cyprus</small></div>
+      <div>
+        <h3>Senior Software Engineer</h3>
+        <div class="org">ODYSSEY Cybersecurity</div>
+        <p>Building security-focused web applications with React and .NET, working with architects, AI researchers and cybersecurity analysts. I own features across the stack, catch stability problems early, and propose new ways to visualize and interact with security data. Hands-on with LLM integration and agentic workflows.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when"><div class="plogo"><img src="portfolio-assets/p-inmobiles.png" alt="inmobiles logo" loading="lazy"></div>Oct 2020 – Jun 2025<small>Lebanon</small></div>
+      <div>
+        <h3>Software Engineer</h3>
+        <div class="org">inmobiles</div>
+        <p>Front-end and full-stack work on value-added services for mobile operators and on client platforms. Next.js and React interfaces, Redux and Context state, .NET Core MVC back ends, REST and GraphQL integration, Jest and React Testing Library.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when"><div class="plogo"><img src="portfolio-assets/p-creapix.png" alt="Creapix logo" loading="lazy"></div>May 2019 – Feb 2020<small>Lebanon</small></div>
+      <div>
+        <h3>Multimedia Engineer</h3>
+        <div class="org">Creapix</div>
+        <p>Responsive front ends and Laravel REST back ends with SQL database design, plus brand identity work: logos, stationery, company profiles and packaging for clients in hospitality, pharma and holding groups. Worked directly with clients on requirements and delivery.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when"><div class="plogo"><img src="portfolio-assets/p-born.png" alt="Born Interactive logo" loading="lazy"></div>Jun – Sep 2017<small>Internship</small></div>
+      <div>
+        <h3>Web Graphic Designer</h3>
+        <div class="org">Born Interactive</div>
+        <p>Helped redesign the corporate website, designed layouts for several web projects, and ran user research and usability tests.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <div class="sec-head">
+      <h2 id="work-h">Selected work</h2>
+      <div class="filters" role="group" aria-label="Filter by stack">
+        <button type="button" id="f-all" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" id="f-react" data-filter="react" aria-pressed="false">React</button>
+        <button type="button" id="f-next" data-filter="next" aria-pressed="false">Next.js</button>
+        <button type="button" id="f-node" data-filter="node" aria-pressed="false">Node.js</button>
+        <button type="button" id="f-dotnet" data-filter="dotnet" aria-pressed="false">.NET</button>
+        <button type="button" id="f-php" data-filter="php" aria-pressed="false">PHP</button>
+        <button type="button" id="f-flutter" data-filter="flutter" aria-pressed="false">Flutter</button>
+      </div>
+    </div>
+
+    <div class="group-label eyebrow"><em>Odyssey Cybersecurity</em>2025 – now</div>
+
+    <article class="project" data-stack="react dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-odyssey.png" alt="Odyssey Cybersecurity logo" loading="lazy"></div><span class="code">+357</span><span class="market">Cyprus<br>Odyssey</span></div>
+      <div>
+        <h3>Security product interfaces</h3>
+        <div class="client">ODYSSEY Cybersecurity · product engineering</div>
+        <p>Web applications for Odyssey's cybersecurity products, built with React on the front end and .NET services behind them. The work turns analyst workflows and complex functional requirements into fast, maintainable interfaces.</p>
+        <ul>
+          <li>Data visualization and interaction design for security data, shaped with analysts and AI researchers.</li>
+          <li>LLM integration and agentic workflows inside security tooling.</li>
+          <li>Full-stack diagnosis and fixes, with preventive changes that improve product stability.</li>
+        </ul>
+        <div class="tags"><span>React</span><span>TypeScript</span><span>.NET</span><span>Data viz</span><span>LLM integration</span></div>
+      </div>
+    </article>
+
+    <div class="group-label eyebrow"><em>Node.js &amp; full-stack builds</em>independent projects</div>
+
+    <article class="project" data-stack="flutter">
+      <div class="route"><div class="plogo initials" role="img" aria-label="Sports Center POS">POS</div><span class="code">+961</span><span class="market">Lebanon<br>Sports center</span></div>
+      <div>
+        <h3>Sports Center POS &amp; back office</h3>
+        <div class="client">Café, basketball and padel courts · SUNMI T2 Lite terminal, owner app on phone and web</div>
+        <p>A complete point of sale and back office for a sports center with a coffee shop and courts. It runs fully offline on an Android POS terminal, prices in USD, takes payment in USD and LBP, and works in English and Arabic.</p>
+        <ul>
+          <li>Café POS: categories, barcode scanning, modifiers, discounts with manager approval, held tabs, split bills, mixed-currency payment with LBP rounding, bilingual receipts and refunds that reverse payment and stock.</li>
+          <li>Court booking: day and week grids, half-court and multi-sport bookings, time-of-day and holiday pricing rules, deposits, cancellation and no-show policies, weekly series and academy billing.</li>
+          <li>Inventory and accounting: stock on hand and value, supplier receiving on credit, waste, stock counts with variance, expenses, customer credit tabs with limits, shift X/Z reports and profit and loss.</li>
+          <li>Five staff roles with PIN login, an audit log that cannot be edited, and every sale in one database transaction.</li>
+          <li>Encrypted SQLite database, automatic backups, and optional live cloud sync to Supabase with conflict handling for offline changes.</li>
+          <li>Reports dashboard with KPIs and Excel / CSV export, plus a wide unit and database test suite.</li>
+        </ul>
+        <div class="tags"><span>Flutter</span><span>Dart</span><span>SQLite (drift)</span><span>Supabase</span><span>Offline-first</span><span>Arabic / RTL</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="next react">
+      <div class="route"><div class="plogo initials" role="img" aria-label="Glee Root">GR</div><span class="code">+961</span><span class="market">Lebanon<br>Glee Root</span></div>
+      <div>
+        <h3>Glee Root website</h3>
+        <div class="client">Hydroponic greenhouse · ordering site for fresh lettuce and basil</div>
+        <p>The website for a hydroponic greenhouse growing Lollo Rosso, Lollo Verde, oak-leaf lettuces and basil, where customers build weekly boxes and shops request wholesale supply.</p>
+        <ul>
+          <li>Scroll-driven hero animation on GSAP ScrollTrigger and Lenis, with a procedurally generated plant (leaves and root system) and a reduced-motion mode visitors can switch on or off.</li>
+          <li>Box builder for weekly orders by delivery zone and frequency, plus wholesale and contact forms.</li>
+          <li>Server actions with Zod validation, honeypot fields and per-IP rate limiting; submissions go out through the WhatsApp Business API, with a one-tap fallback.</li>
+          <li>All content (crops, prices, zones, company details) kept in typed content files, so nothing is hard-coded in components. SEO and generated share images.</li>
+        </ul>
+        <div class="tags"><span>Next.js 15</span><span>TypeScript</span><span>Tailwind v4</span><span>GSAP</span><span>Zod</span><span>WhatsApp API</span></div>
+        <div class="shots three">
+          <figure><a href="portfolio-assets/shot-glee-home.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-glee-home.jpg" alt="Glee Root home page with a fully grown lettuce and its roots above the headline Forty-five days from seed to your kitchen" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>Home: the grown plant at the end of the scroll animation</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-glee-order.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-glee-order.jpg" alt="Order page with weekly box presets, a build-your-own list and a request summary sent on WhatsApp" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>Box builder with a live request summary</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-glee-greens.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-glee-greens.jpg" alt="Our greens page showing Lollo Verde and Lollo Rosso photos" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>The range of greens</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="node react">
+      <div class="route"><div class="plogo initials" role="img" aria-label="Incident tracker">IT</div><span class="code">+961</span><span class="market">Lebanon<br>Monitoring</span></div>
+      <div>
+        <h3>Incident tracking &amp; analytics platform</h3>
+        <div class="client">Arabic-first web app · Node.js, Express, SQLite</div>
+        <p>A system for recording incidents across Lebanon and analysing them by place and time. Each incident holds multiple events with exact map coordinates and casualty lines, across all 2,708 Lebanese towns.</p>
+        <ul>
+          <li>Express REST API with transactional writes, nested incident → event → casualty model, cascading deletes and automatic migration from the old flat schema.</li>
+          <li>Analytics dashboard: KPI cards, event map and heatmap on Leaflet, 11 Chart.js charts, filters by governorate and date, PDF export.</li>
+          <li>Media intelligence pipeline: Telegram and RSS ingestion, duplicate detection, event clustering, keyword rules and Lebanese place-name extraction.</li>
+          <li>Full RTL interface with light and dark themes, CSV and JSON export.</li>
+        </ul>
+        <div class="tags"><span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>Vite</span><span>Tailwind</span><span>Leaflet</span><span>Chart.js</span></div>
+        <div class="shots">
+          <figure><a href="portfolio-assets/shot-incident-dashboard.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-incident-dashboard.jpg" alt="Analytics dashboard with filters, KPI cards, an event map and a heatmap of southern Lebanon" style="--ar: 1200 / 833" loading="lazy"></a><figcaption>Analytics dashboard: filters, KPIs, event map and heatmap</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-incident-records.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-incident-records.jpg" alt="Records page listing towns with their governorate, district and record counts" loading="lazy"></a><figcaption>Records by town, with CSV and JSON export</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="node react">
+      <div class="route"><div class="plogo initials" role="img" aria-label="Municipal census">MC</div><span class="code">PWA</span><span class="market">Lebanon<br>Municipality</span></div>
+      <div>
+        <h3>Municipal resident census app</h3>
+        <div class="client">Installable PWA for field staff · Node.js, SQLite</div>
+        <p>A field app that municipal staff install on Samsung tablets to record resident data for municipal services. It runs entirely on the municipality's local network with no cloud dependency.</p>
+        <ul>
+          <li>Offline-first: records save locally and sync through a queue when the tablet reconnects.</li>
+          <li>Admin-managed accounts with roles, invite codes and forced password change on first login.</li>
+          <li>Admin dashboard with all records, soft delete and staff management. Statistics view with JSON import and export.</li>
+          <li>A single Node process serves the API and the built client. Provisioning scripts create accounts, and pm2 keeps it running.</li>
+        </ul>
+        <div class="tags"><span>Node.js</span><span>Express</span><span>SQLite</span><span>React</span><span>PWA</span><span>Tailwind</span></div>
+        <div class="shots one">
+          <figure><a href="portfolio-assets/shot-muni-form.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-muni-form.jpg" alt="Arabic census form with a setup dialog asking for governorate, district and municipality" loading="lazy"></a><figcaption>Session setup before filling household records (RTL)</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="php">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-privileb.png" alt="Privileb logo" loading="lazy"></div><span class="code">Cards</span><span class="market">Lebanon<br>Privileb</span></div>
+      <div>
+        <h3>Privileb discount card platform</h3>
+        <div class="client">Privileb · mobile app back end and admin</div>
+        <p>The back end for a privilege-card app where cardholders find discounts at partner branches.</p>
+        <ul>
+          <li>Laravel 8 admin on Voyager for offers, categories, branches and cardholders.</li>
+          <li>Mobile web services for login and registration, card purchase, offer search, offers by category and region, nearby offers, favourites and QR offer scanning.</li>
+          <li>SMTP mail for activation and password recovery.</li>
+        </ul>
+        <div class="tags"><span>PHP</span><span>Laravel 8</span><span>Voyager</span><span>MySQL</span><span>REST</span></div>
+      </div>
+    </article>
+
+    <div class="group-label eyebrow"><em>inmobiles</em>telecom operators · value-added services</div>
+
+    <article class="project" data-stack="next react node">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-tunes.png" alt="Korek Tunes logo" loading="lazy"></div><span class="code">+964</span><span class="market">Iraq<br>Korek Telecom</span></div>
+      <div>
+        <h3>Ring Back Tone CMS &amp; K-Music</h3>
+        <div class="client">Korek Telecom · Korek Tunes and K-Music</div>
+        <p>The operator CMS behind Korek's caller-tune service, Korek Tunes, later extended into K-Music, Korek's music and artist service with its own discover, artist and playlist pages.</p>
+        <ul>
+          <li>Roles for operator staff, content providers, aggregators and customer care, plus configuration and audit logs.</li>
+          <li>Content management with audio preview, bulk Excel and CSV export.</li>
+          <li>Server-rendered with Next.js on a custom Express server, next-i18next for Arabic and English.</li>
+        </ul>
+        <div class="tags"><span>Next.js</span><span>Express</span><span>Redux-Saga</span><span>next-i18next</span><span>Material UI</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="next react node">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-zong.png" alt="Zong logo" loading="lazy"></div><span class="code">+92</span><span class="market">Pakistan<br>Zong</span></div>
+      <div>
+        <h3>Zong Ring Back Tone portal</h3>
+        <div class="client">Zong Pakistan · subscriber portal</div>
+        <p>The subscriber-facing site where Zong users browse, preview and set their caller tunes.</p>
+        <ul>
+          <li>Top Tunes, free tunes, personal RBT library, playlists and playback history.</li>
+          <li>OTP login by phone number, profile completion and settings.</li>
+          <li>In-browser audio: preview player, voice recording and drag-and-drop tone upload.</li>
+        </ul>
+        <div class="tags"><span>Next.js</span><span>Express</span><span>Redux-Saga</span><span>next-i18next</span><span>Audio</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-korek.png" alt="Korek Telecom logo" loading="lazy"></div><span class="code">+964</span><span class="market">Iraq<br>Korek Telecom</span></div>
+      <div>
+        <h3>Korek Telecom website &amp; MyKorek</h3>
+        <div class="client">Korek Telecom · public site and self-care · live at korektel.com</div>
+        <p>Korek's consumer and business web presence, including the MyKorek self-care area where subscribers manage their line.</p>
+        <ul>
+          <li>Personal, Business and e-commerce sections with multi-step forms and PIN-code verification.</li>
+          <li>Engagement features: prize wheel, QR code generation and scanning, social sharing.</li>
+          <li>Store locator on Google Maps, GSAP animation, skeleton loading states.</li>
+        </ul>
+        <div class="tags"><span>React</span><span>Redux Toolkit</span><span>Formik</span><span>Google Maps</span><span>GSAP</span></div>
+        <div class="shots">
+          <figure><a href="portfolio-assets/shot-korek-home.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-korek-home.jpg" alt="Korek home page with the Golden Offer banner, app download and voucher recharge" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>Home: offers carousel, app and recharge</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-korek-business.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-korek-business.jpg" alt="Korek Business section with call center and IoT services" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>Korek Business</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-korek-entertainment.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-korek-entertainment.jpg" alt="Korek entertainment catalogue with games and app cards and prices in IQD" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>Entertainment catalogue</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-korek-offers.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-korek-offers.jpg" alt="Korek All Offers page with bundle categories and help contacts" style="--ar: 1200 / 750" loading="lazy"></a><figcaption>All offers by category</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-korek.png" alt="Korek Telecom logo" loading="lazy"></div><span class="code">+964</span><span class="market">Iraq<br>Korek Telecom</span></div>
+      <div>
+        <h3>Korek Call Center CRM</h3>
+        <div class="client">Korek Telecom · customer care</div>
+        <p>An internal tool for Korek's call-center agents to look up subscribers and act on their VAS accounts: subscriber search, history, actions and notifications, blacklist management, Beep service controls, content lists and supervisor reports.</p>
+        <div class="tags"><span>ASP.NET Core MVC</span><span>EF Core</span><span>Serilog</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-mobily.png" alt="Mobily logo" loading="lazy"></div><span class="code">+966</span><span class="market">Saudi Arabia<br>Mobily</span></div>
+      <div>
+        <h3>Mobily Reporting CMS</h3>
+        <div class="client">Mobily · service reporting</div>
+        <p>A reporting and administration console for a Mobily value-added service: statistics dashboards and exportable reports, number blocking, subscriber groups, holiday schedules, and web users and roles on ASP.NET Identity.</p>
+        <div class="tags"><span>ASP.NET Core 3.1</span><span>EF Core</span><span>Identity</span><span>MySQL</span><span>SQL Server</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-jazz.png" alt="Jazz logo" loading="lazy"></div><span class="code">+92</span><span class="market">Pakistan<br>Jazz</span></div>
+      <div>
+        <h3>Jazz Caller ID</h3>
+        <div class="client">Jazz Pakistan · caller identification subscription</div>
+        <p>Subscription landing and self-care flow for Jazz's caller identification service.</p>
+        <ul>
+          <li>MSISDN capture and validation with libphonenumber, OTP verification.</li>
+          <li>Subscriber profile: change display name, list or unlist your number, turn caller name on or off, unsubscribe.</li>
+          <li>Device detection and structured logging for campaign tracking.</li>
+        </ul>
+        <div class="tags"><span>ASP.NET Core</span><span>libphonenumber</span><span>Serilog</span></div>
+        <div class="shots phones">
+          <figure><a href="portfolio-assets/m-jazz-home.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/m-jazz-home.jpg" alt="Jazz caller ID landing page on a phone, showing an incoming call card and activation form" loading="lazy"></a><figcaption>Mobile landing and activation</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-mtn.png" alt="MTN logo" loading="lazy"></div><span class="code">+233</span><span class="market">Ghana<br>MTN</span></div>
+      <div>
+        <h3>MTN WhoDeyCall</h3>
+        <div class="client">MTN Ghana · caller name service</div>
+        <p>The Ghana rollout of the caller-name product, "Sabi the name behind every number": a mobile landing with bundle selection and subscription, then self-care to change your display name, list or unlist your number and turn caller name on or off.</p>
+        <div class="tags"><span>ASP.NET Core</span><span>Razor</span></div>
+        <div class="shots phones">
+          <figure><a href="portfolio-assets/m-mtn-home.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/m-mtn-home.jpg" alt="MTN WhoDeyCall landing page on a phone with a Subscribe Now button" loading="lazy"></a><figcaption>Landing and subscribe</figcaption></figure>
+          <figure><a href="portfolio-assets/m-mtn-profile.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/m-mtn-profile.jpg" alt="MTN WhoDeyCall profile page with change name, list and unlist number buttons" loading="lazy"></a><figcaption>Subscriber self-care</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-mattel.png" alt="Mattel logo" loading="lazy"></div><span class="code">+222</span><span class="market">Mauritania<br>Mattel</span></div>
+      <div>
+        <h3>Mattel SELEVLI credit loan</h3>
+        <div class="client">Mattel · SELEVLI airtime credit, in French</div>
+        <p>A web flow that lets prepaid subscribers request an airtime loan: login by phone number, OTP verification, encrypted MSISDN handling and the loan request.</p>
+        <div class="tags"><span>ASP.NET Core</span><span>Identity</span><span>SQL Server</span></div>
+        <div class="shots phones">
+          <figure><a href="portfolio-assets/m-mattel-login.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/m-mattel-login.jpg" alt="Mattel SELEVLI phone number entry screen" loading="lazy"></a><figcaption>Phone number entry</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-sim24.png" alt="Sim24 logo" loading="lazy"></div><span class="code">eSIM</span><span class="market">Global<br>Sim24</span></div>
+      <div>
+        <h3>Sim24</h3>
+        <div class="client">Sim24 · eSIM brand on the eSIMCard platform</div>
+        <p>A localized, multi-page site for a digital carrier selling global and regional eSIM plans, virtual numbers and international calling, with a device compatibility checker, voucher redeem, wallet refill, a My SIM account area and a help center.</p>
+        <div class="tags"><span>.NET 6</span><span>Localization</span><span>Serilog</span></div>
+        <div class="shots ">
+          <figure><a href="portfolio-assets/shot-sim24-esim.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-sim24-esim.jpg" alt="Sim24 Buy eSIM page with local, regional and global tabs and country list" loading="lazy"></a><figcaption>eSIM catalogue by destination</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-sim24-virtual.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-sim24-virtual.jpg" alt="Sim24 virtual phone numbers page with country prices" loading="lazy"></a><figcaption>Virtual numbers</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-sim24-how.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-sim24-how.jpg" alt="Sim24 how it works page with iPhone and Android guides" loading="lazy"></a><figcaption>How it works guides</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-sim24-login.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-sim24-login.jpg" alt="Sim24 account sign-in page" loading="lazy"></a><figcaption>Account sign-in</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo initials" role="img" aria-label="JustKonnekt">JK</div><span class="code">SMS</span><span class="market">Business<br>messaging</span></div>
+      <div>
+        <h3>JustKonnekt</h3>
+        <div class="client">JustKonnekt · business messaging</div>
+        <p>A customer web app for a business SMS service: login, dashboard, product catalogue, profile and SMS sending.</p>
+        <div class="tags"><span>ASP.NET Core</span><span>MVC</span></div>
+      </div>
+    </article>
+
+    <div class="group-label eyebrow"><em>inmobiles</em>platforms for clients beyond telecom</div>
+
+    <article class="project" data-stack="react node">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-guichet.png" alt="Guichet Producteurs logo" loading="lazy"></div><span class="code">+237</span><span class="market">Cameroon<br>FODECC</span></div>
+      <div>
+        <h3>Guichet Producteur</h3>
+        <div class="client">FODECC · coffee and cocoa sector fund, phase 3</div>
+        <p>A management platform for an agricultural development fund that tracks farmers from registration to reimbursement.</p>
+        <ul>
+          <li>Farmers, plots, locations, seasons, agro-dealers, products, orders, collections and reimbursements.</li>
+          <li>Plot mapping on Google Maps and image galleries for field evidence.</li>
+          <li>Bulk import from CSV and Excel, export to CSV and XLSX, reCAPTCHA-protected auth, Express proxy for the API.</li>
+        </ul>
+        <div class="tags"><span>React</span><span>Redux-Saga</span><span>Material UI</span><span>Express</span><span>Google Maps</span><span>SheetJS</span></div>
+        <div class="shots one">
+          <figure><a href="portfolio-assets/shot-fodecc-login.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-fodecc-login.jpg" alt="Guichet Producteurs sign-in screen with the coffee-bean logo" loading="lazy"></a><figcaption>Staging sign-in for the FODECC platform</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-costi.png" alt="Dr. Costi logo" loading="lazy"></div><span class="code">Health</span><span class="market">Clinic<br>Dr. Costi</span></div>
+      <div>
+        <h3>Dr. Costi platform</h3>
+        <div class="client">Dr. Costi · 5 applications</div>
+        <p>A family of apps for a medical practice: the patient-facing app, a preparation room for patients before their visit, a staff CMS with dashboards, data tables, charts and a survey builder, and a password reset service, backed by ASP.NET Core.</p>
+        <div class="tags"><span>React</span><span>TypeScript</span><span>React Query</span><span>SurveyJS</span><span>ASP.NET Core</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-loopers.png" alt="Loopers logo" loading="lazy"></div><span class="code">CRM</span><span class="market">Field service<br>Loopers</span></div>
+      <div>
+        <h3>Loopers Portal</h3>
+        <div class="client">Loopers · company and employee management</div>
+        <p>A multi-company admin portal: company dashboards, employees, appointments calendar, claims, predefined notes and reports with report translation, client import, ad management, and permission-based UI with CASL.</p>
+        <div class="tags"><span>React</span><span>Redux-Saga</span><span>CASL</span><span>amCharts</span><span>Firebase</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-noor.png" alt="Noor Shop logo" loading="lazy"></div><span class="code">Retail</span><span class="market">E-commerce<br>Noor</span></div>
+      <div>
+        <h3>Noor E-Commerce admin</h3>
+        <div class="client">E-commerce back office</div>
+        <p>The admin panel and API for an online store: product catalogue, sales, discounts, accounts and user management, Stripe payments, MailKit email notifications and task management.</p>
+        <div class="tags"><span>.NET 6</span><span>EF Core</span><span>Stripe</span><span>MailKit</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-aaa.png" alt="AAA Luxury &amp; Sport Car Rental logo" loading="lazy"></div><span class="code">+33</span><span class="market">France &amp; Monaco<br>AAA</span></div>
+      <div>
+        <h3>AAA Car Rental</h3>
+        <div class="client">AAA Luxury &amp; Sport Car Rental · Cannes, Paris, Monaco · live at aaarentcars.com</div>
+        <p>A bilingual English and French booking website for a luxury car rental company: search by category and brand, car details, rates calculator, booking with sign-up, agencies map, news, events and partners.</p>
+        <div class="tags"><span>React</span><span>Redux-Saga</span><span>react-intl</span><span>Google Maps</span></div>
+        <div class="shots three">
+          <figure><a href="portfolio-assets/shot-aaa-rates.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-aaa-rates.jpg" alt="AAA rates table for limousines with prices by rental length" loading="lazy"></a><figcaption>Rates by category and duration</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-aaa-events.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-aaa-events.jpg" alt="AAA events page listing MIPIM Cannes, Cannes Lions and the Monaco Grand Prix" loading="lazy"></a><figcaption>Events with city filter</figcaption></figure>
+          <figure><a href="portfolio-assets/shot-aaa-contact.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/shot-aaa-contact.jpg" alt="AAA contact form" loading="lazy"></a><figcaption>Contact form</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-raywhite.png" alt="Ray White logo" loading="lazy"></div><span class="code">+961</span><span class="market">Lebanon<br>Ray White</span></div>
+      <div>
+        <h3>Ray White property search</h3>
+        <div class="client">Ray White · real estate</div>
+        <p>The property listings front end for a real estate network, with price histogram filtering, reference search, offices and map view, plus SQL migration and search-index scripts for the imported listings.</p>
+        <div class="tags"><span>React</span><span>D3 scales</span><span>Google Maps</span><span>SQL</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="dotnet">
+      <div class="route"><div class="plogo initials" role="img" aria-label="BreadCRM">BC</div><span class="code">Ops</span><span class="market">Approvals<br>BreadCRM</span></div>
+      <div>
+        <h3>BreadCRM</h3>
+        <div class="client">Order approval CRM</div>
+        <p>An internal CRM for approving delivery orders ("bons") and managing the related mobile app's data.</p>
+        <div class="tags"><span>ASP.NET Core</span><span>Identity</span><span>MySQL</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-inmobiles.png" alt="inmobiles logo" loading="lazy"></div><span class="code">R&amp;D</span><span class="market">inmobiles<br>internal</span></div>
+      <div>
+        <h3>Transcription app &amp; web dialer</h3>
+        <div class="client">inmobiles · voice prototypes</div>
+        <p>An app that records or uploads audio and returns its transcription, and a browser dialer that places peer-to-peer calls, records them and sends the recording for transcription.</p>
+        <div class="tags"><span>React</span><span>PeerJS</span><span>MP3 recording</span><span>styled-components</span></div>
+      </div>
+    </article>
+
+    <div class="group-label eyebrow"><em>Side projects</em></div>
+
+    <article class="project" data-stack="next react">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-spotify.png" alt="Spotify logo" loading="lazy"></div><span class="code">Music</span><span class="market">Personal</span></div>
+      <div>
+        <h3>Next Spotify v2</h3>
+        <div class="client">Spotify Web API client</div>
+        <p>A Spotify clone where users sign in with their Spotify account to browse playlists, artists, albums and search, with track previews and recommendations.</p>
+        <div class="tags"><span>Next.js</span><span>TypeScript</span><span>NextAuth</span><span>Tailwind</span><span>Zustand</span></div>
+      </div>
+    </article>
+
+    <article class="project" data-stack="react node">
+      <div class="route"><div class="plogo"><img src="portfolio-assets/p-cognativex.png" alt="CognativeX logo" loading="lazy"></div><span class="code">Test</span><span class="market">CognativeX</span></div>
+      <div>
+        <h3>CognativeX code challenge</h3>
+        <div class="client">Technical assessment</div>
+        <p>A Redux Toolkit user flow with React Hook Form, infinite scroll, Highcharts and a JSON Server mock API, covered by Jest tests.</p>
+        <div class="tags"><span>React</span><span>Redux Toolkit</span><span>Jest</span><span>JSON Server</span></div>
+      </div>
+    </article>
+
+    <p class="empty" id="empty" hidden>No projects use that stack.</p>
+  </section>
+
+  <section id="design" aria-labelledby="design-h">
+    <div class="sec-head">
+      <h2 id="design-h">Logo &amp; brand design</h2>
+      <p>Identity work from Creapix, 2019</p>
+    </div>
+    <div class="logos">
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-elbrimo.png" alt="El Brimo logo: Arabic calligraphy inside a star medallion" loading="lazy"></div><div class="cap"><b>El Brimo</b><span>Restaurant</span></div></div>
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-sss.png" alt="Swiss Smart Systems logo: shield with a Swiss cross" loading="lazy"></div><div class="cap"><b>Swiss Smart Systems</b><span>Security</span></div></div>
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-nexfort.png" alt="Nexfort wordmark with a lifebuoy O" loading="lazy"></div><div class="cap"><b>Nexfort</b><span>InfoSec advisors</span></div></div>
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-samaha.png" alt="Samaha Holding logo" loading="lazy"></div><div class="cap"><b>Samaha Holding</b><span>Real estate</span></div></div>
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-alsayyar.png" alt="Al Sayyar Holding logo in square Kufic" loading="lazy"></div><div class="cap"><b>Al Sayyar Holding</b><span>Holding group</span></div></div>
+      <div class="logo-tile"><div class="art"><img src="portfolio-assets/logo-mc.png" alt="Magnificent Creations monogram with a sunburst" loading="lazy"></div><div class="cap"><b>Magnificent Creations</b><span>Events</span></div></div>
+    </div>
+    <div class="mockups">
+      <figure><a href="portfolio-assets/mock-elbrimo-web.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/mock-elbrimo-web.jpg" alt="El Brimo website mockup" loading="lazy"></a><figcaption>El Brimo website</figcaption></figure>
+      <figure><a href="portfolio-assets/mock-elbrimo-van.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/mock-elbrimo-van.jpg" alt="El Brimo branded delivery van" loading="lazy"></a><figcaption>El Brimo vehicle branding</figcaption></figure>
+      <figure><a href="portfolio-assets/mock-alsayyar.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/mock-alsayyar.jpg" alt="Al Sayyar Holding logo mockup" loading="lazy"></a><figcaption>Al Sayyar Holding identity</figcaption></figure>
+      <figure><a href="portfolio-assets/mock-janssen.jpg" target="_blank" rel="noopener"><img src="portfolio-assets/mock-janssen.jpg" alt="Janssen Academy logo mockup" loading="lazy"></a><figcaption>Janssen Academy</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-h">
+    <div class="sec-head"><h2 id="skills-h">What I work with</h2></div>
+    <div class="skills">
+      <div><h3>Front end</h3><p>React, Next.js, TypeScript, JavaScript (ES6+), Redux, Context API, React Query, Zustand, HTML5, CSS3</p></div>
+      <div><h3>UI</h3><p>Tailwind CSS, Material UI, Bootstrap, Sass, LESS, styled-components, GSAP, Chart.js, Leaflet</p></div>
+      <div><h3>Back end</h3><p>Node.js, Express, .NET and .NET Core MVC, PHP, Laravel, REST APIs, GraphQL, Apollo</p></div>
+      <div><h3>Data</h3><p>MySQL, SQL Server, SQLite, NoSQL, Entity Framework Core</p></div>
+      <div><h3>Cloud, DevOps &amp; AI</h3><p>AWS, Azure, Docker, Git, Linux, npm, pm2, LLM integration, agentic workflows</p></div>
+      <div><h3>Testing &amp; design</h3><p>Jest, React Testing Library, Cypress, Figma, Adobe Creative Suite</p></div>
+    </div>
+  </section>
+
+  <section id="education" aria-labelledby="edu-h">
+    <div class="sec-head"><h2 id="edu-h">Education &amp; languages</h2></div>
+    <div class="facts">
+      <div><b>Master of Engineering in Multimedia and Network</b><span>Antonine University · 2014 – 2020</span></div>
+      <div><b>Lebanese Baccalaureate</b><span>Lebaa Official School · 2010 – 2013</span></div>
+      <div><b>Languages</b><span>Arabic (native) · English (professional) · French (intermediate)</span></div>
+      <div><b>Off the keyboard</b><span>Basketball</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Samer J. Farhat · Senior Software Engineer</span>
+    <span class="mono">samerfarhat777@gmail.com</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.filters button');
+  var projects = document.querySelectorAll('.project');
+  var labels = document.querySelectorAll('#work .group-label');
+  var empty = document.getElementById('empty');
+  function apply(filter) {
+    var shown = 0;
+    projects.forEach(function (p) {
+      var match = filter === 'all' || p.dataset.stack.split(' ').indexOf(filter) !== -1;
+      p.classList.toggle('hidden-by-filter', !match);
+      if (match) shown++;
+    });
+    labels.forEach(function (l) {
+      var n = l.nextElementSibling, any = false;
+      while (n && n.classList.contains('project')) { if (!n.classList.contains('hidden-by-filter')) any = true; n = n.nextElementSibling; }
+      l.hidden = !any;
+    });
+    empty.hidden = shown > 0;
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.filter === filter)); });
+    try { localStorage.setItem('pf-filter', filter); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.filter); }); });
+  var saved = 'all';
+  try { saved = localStorage.getItem('pf-filter') || 'all'; } catch (e) {}
+  if (!document.querySelector('[data-filter="' + saved + '"]')) saved = 'all';
+  apply(saved);
+})();
+</script>
+</body>
+</html>
